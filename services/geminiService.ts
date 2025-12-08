@@ -1,5 +1,8 @@
+// services/geminiService.ts
+
 import { GoogleGenAI } from "@google/genai";
 import { StoryboardResponse, GenerateOptions } from "../types";
+import { VISUAL_STYLES } from "../constants";
 
 export const generateStoryboard = async (topic: string, options: GenerateOptions): Promise<StoryboardResponse> => {
   const apiKey = options.apiKey || process.env.API_KEY;
@@ -9,53 +12,86 @@ export const generateStoryboard = async (topic: string, options: GenerateOptions
   }
 
   const ai = new GoogleGenAI({ apiKey });
-  const sceneCount = options.duration === 'short' ? 10 : 25;
+  
+  // 1. SELECT STYLE
+  const selectedStyle = VISUAL_STYLES.find(s => s.id === options.style_id) || VISUAL_STYLES[0];
+  
+  // 2. FORMAT & PACING LOGIC
+  const isShort = options.duration === 'short';
+  const sceneCount = isShort ? 10 : 25;
+  const aspectRatio = isShort ? "9:16 (Vertical)" : "16:9 (Landscape)";
+  const pacingGuide = isShort 
+    ? "FAST-PACED SPRINT. Every 3 seconds must have a new visual hook. Structure: HOOK (Sc 1-2) -> PROBLEM (Sc 3-4) -> SOLUTION/FACT (Sc 5-8) -> PUNCHLINE (Sc 9-10)."
+    : "CINEMATIC JOURNEY. Allow shots to breathe. Use the 'Establish -> Isolate -> Detail' visual pattern. Build emotional connection before delivering facts.";
 
   const SYSTEM_PROMPT = `
-  ROLE: Expert Cinematic Director for Educational Shorts.
-  TOPIC: "${topic}"
-  OUTPUT: JSON Storyboard (${sceneCount} scenes).
-
-  === CRITICAL LANGUAGE RULES ===
-  1. **NARRATION SCRIPT**: MUST be in **INDONESIAN (Bahasa Indonesia)**. Casual, engaging, educational tone.
-  2. **VISUAL PROMPTS (JSON Fields)**: All visual descriptions (background, camera, character, vfx) MUST be in **ENGLISH**. This is for Veo 3 generation.
-  3. **METADATA**: Title (Clickbait/Viral) and Description in **INDONESIAN**.
-
-  === STRUCTURE RULES ===
-  - **Structure**: Hook -> Context -> The Science/Fact -> Detailed Visuals -> Climax/Impact -> Conclusion.
-  - **Character Consistency**: If there is a main character, define them in Scene 1 and use the EXACT same ID and Description in \`character_lock\` for subsequent scenes.
-
-  === JSON OUTPUT FORMAT (VEO 3 COMPLIANT) ===
-  You must return a valid JSON object. Do not include markdown formatting.
+  YOU ARE A WORLD-CLASS ANIMATION DIRECTOR (Pixar/Aardman Alumni).
+  Your job is to create a VIRAL VIDEO STORYBOARD for: "${topic}"
   
-  Format:
+  === CONFIGURATION ===
+  - MODE: ${aspectRatio}
+  - DURATION TYPE: ${isShort ? "Short Form (TikTok/Reels)" : "Long Form (YouTube)"}
+  - VISUAL STYLE: ${selectedStyle.label}
+  - KEYWORD PROMPT: "${selectedStyle.prompt_keyword}"
+  - TOTAL SCENES: ${sceneCount}
+  - PACING: ${pacingGuide}
+
+  === STRICT RULES FOR HIGH QUALITY OUTPUT ===
+  1. **AUTO-TONE ANALYSIS**: 
+     - Analyze the topic and automatically determine the best narrative tone (e.g., Fun Educational, Dramatic Epic, Warm Bedtime, Suspenseful).
+     - The script and visual choices MUST align with this tone.
+
+  2. **CHARACTER CONSISTENCY (CRUCIAL)**: 
+     - Create a definitive "Character Lock" in Scene 1. 
+     - The 'id' must be simple (e.g., 'CRAB_01').
+     - The 'description' must be EXTREMELY detailed (color, accessories, eye shape).
+     - REPEAT this exact description in the JSON for every scene the character appears.
+
+  3. **VISUAL PROMPTS (THE "SECRET SAUCE")**:
+     - 'visual_prompt_detailed': This is for the Video AI generator. It MUST include the *Visual Style Keyword*, *Lighting*, *Camera Angle*, *Action*, and *Texture Details*.
+     - Example: "Close-up macro shot of a cute red crab with big eyes, holding a tiny suitcase, standing on wet asphalt. Claymation style, fingerprints visible on the shell, tilt-shift effect, golden hour lighting."
+
+  4. **CAMERA MOVEMENT**:
+     - Never just say "Static". Use: "Slow dolly in", "Truck left", "Orbit around", "Rack focus from X to Y". Dynamic cameras make viral videos.
+
+  5. **NARRATIVE (INDONESIAN)**:
+     - Script must be colloquial, natural, and match the Determined Tone.
+     - Add [Sound Effect] cues in the script if necessary (e.g., *Bunyi ledakan*, *Suara ombak*).
+
+  === OUTPUT FORMAT (JSON ONLY) ===
   {
-    "metadata": { 
-      "title": "Viral Clickbait Title in Indonesian", 
-      "description": "Short summary in Indonesian", 
-      "hashtags": ["#tag1", "#tag2"] 
+    "metadata": {
+      "title": "Clickbait/Viral Title (Indonesian)",
+      "description": "Engaging description (Indonesian)",
+      "hashtags": ["#tag1", "#tag2"],
+      "music_suggestion": "Mood and Genre of background music",
+      "tone_used": "The tone you selected (e.g., Fun Educational)"
     },
-    "voice_over_guide": "Read it in a warm, friendly, slightly playful storytelling tone, with moderate and expressive pacing. (IN ENGLISH)",
+    "voice_over_guide": "English instruction for the VO artist/AI",
     "scenes": [
       {
         "scene_id": 1,
-        "duration_sec": "8",
-        "visual_style": "${options.style}",
-        "narration_script": "Teks narasi bahasa Indonesia...",
+        "duration_sec": 4,
+        "narration_script": "Teks dubbing Indonesia...",
+        "text_overlay": "Teks Singkat di Layar (Max 5 words) or null",
+        "visual_prompt_summary": "Short description for UI display",
+        "visual_prompt_detailed": "FULL DETAILED PROMPT FOR AI VIDEO GENERATOR (Includes style keywords + action + camera)",
         "background_lock": {
-          "setting": "Detailed environment description in ENGLISH...",
-          "lighting": "Lighting mood in ENGLISH...",
-          "props": "Specific items in the scene in ENGLISH..."
+          "setting": "Forest floor / Underwater / Space",
+          "lighting": "Golden hour / Neon / Dark moody",
+          "ambience": "Foggy / Raining / Dusty particles"
         },
         "camera": {
-          "framing": "Shot type (e.g. Medium shot, Close up) in ENGLISH...",
-          "movement": "Camera movement in ENGLISH..."
+          "shot_type": "Close Up",
+          "movement": "Dolly In",
+          "focus": "Sharp focus on character"
         },
         "character_lock": {
-          "id": "UNIQUE_ID (e.g. CAT_1)",
-          "description": "Detailed physical appearance in ENGLISH. If no character, set this object to null."
+          "id": "MAIN_CHAR_1",
+          "name": "Boni the Crab",
+          "description": "Red clay crab, large googly eyes, wearing a yellow construction hat..."
         },
-        "vfx": "Visual effects description in ENGLISH..."
+        "vfx": "Explosion / Sparkles / Speed lines"
       }
     ]
   }
@@ -63,26 +99,25 @@ export const generateStoryboard = async (topic: string, options: GenerateOptions
 
   try {
     const res = await ai.models.generateContent({
-      model: "gemini-2.5-flash", 
-      contents: [{ role: "user", parts: [{ text: "Generate Veo 3 Storyboard JSON." }] }],
+      model: "gemini-2.0-flash",
+      contents: [{ role: "user", parts: [{ text: "ACTION! Generate the storyboard JSON now." }] }],
       config: {
         systemInstruction: SYSTEM_PROMPT,
         responseMimeType: "application/json",
-        temperature: 0.75
+        temperature: 0.8
       }
     });
     
-    // Parser Logic
     const text = res.text?.replace(/```json|```/g, "").trim();
-    if (!text) throw new Error("Empty response from AI");
+    if (!text) throw new Error("AI returned empty response.");
     
     return JSON.parse(text);
 
   } catch (e: any) {
-    console.error(e);
+    console.error("Gemini Error:", e);
     if (e.message?.includes('API key')) {
-        throw new Error("Invalid or missing API Key. Please check Settings.");
+        throw new Error("Invalid API Key. Check Settings.");
     }
-    throw new Error("Gagal generate storyboard: " + e.message);
+    throw new Error("Generation Failed: " + e.message);
   }
 };
