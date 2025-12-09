@@ -43,19 +43,19 @@ const MetadataView: React.FC<MetadataViewProps> = ({ data }) => {
     );
   }
 
-  const descAndTags = `${data.metadata.description}\n\n${data.metadata.hashtags.join(' ')}`;
+  const descAndTags = `${data.marketing_metadata.description}\n\n${data.marketing_metadata.hashtags.join(' ')}`;
 
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
         <h2 className="text-3xl font-bold text-zinc-200">Metadata Viral</h2>
-        <p className="text-zinc-400">Optimasi untuk YouTube Shorts & TikTok.</p>
+        <p className="text-zinc-400">Optimasi SEO & Clickbait untuk Social Media.</p>
       </div>
 
       <div className="space-y-6">
         <CopyBlock 
             label="Viral Title (Clickbait)" 
-            text={data.metadata.title} 
+            text={data.marketing_metadata.title} 
         />
 
         <CopyBlock 

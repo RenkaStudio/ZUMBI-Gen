@@ -48,20 +48,20 @@ export const Icons = {
 export const VISUAL_STYLES: VisualStyleConfig[] = [
   { 
     id: 'clay_master', 
-    label: 'Master Claymation', 
-    prompt_keyword: 'Stop-motion claymation, high-end plasticine texture with visible fingerprints, miniature handcrafted world, tilt-shift photography, shallow depth of field, warm cinematic studio lighting, Octane render, cute but realistic shapes',
-    description: 'Animasi plastisin detail dengan tekstur sidik jari (style: Shaun the Sheep).' 
-  },
-  { 
-    id: 'cinematic_pixar', 
-    label: '3D Cinematic', 
-    prompt_keyword: 'High-fidelity 3D Animation, Unreal Engine 5 render, Disney/Pixar style, subsurface scattering skin, expressive character design, volumetric lighting, vibrant color palette, 8k resolution',
-    description: 'Animasi 3D kualitas bioskop dengan pencahayaan dramatis (style: Pixar/Disney).' 
+    label: 'High-end Clay', 
+    prompt_keyword: 'Plasticine claymation, miniature diorama, visible fingerprints on clay, soft tilt-shift photography, tactile textures, cinematic studio lighting, bulky shapes, vibrant matte colors, stop-motion aesthetic, shallow depth of field',
+    description: 'Animasi plastisin detail dengan tekstur sidik jari (Referensi: Petualang kecil dengan tas).' 
   },
   { 
     id: 'knit_craft', 
-    label: 'Knit & Wool', 
-    prompt_keyword: 'Woolen knitted stop-motion, fuzzy fabric textures, handmade crochet craft aesthetic, soft cozy lighting, macro lens, visible yarn patterns, textile art',
-    description: 'Dunia rajutan benang wol yang hangat dan bertekstur lembut (style: Yoshi Woolly World).' 
-  }
+    label: 'Felt & Wool', 
+    prompt_keyword: 'Felt stop-motion animation, fuzzy wool textures, stray fibers, knitted fabric environment, macro lens photography, soft cozy forest lighting, handmade doll aesthetic, needle felting details, rim lighting on fibers',
+    description: 'Dunia rajutan benang wol yang lembut dan hangat (Referensi: Anak laki-laki di hutan).' 
+  },
+  { 
+    id: 'cinematic_pixar', 
+    label: '3D Pixar Style', 
+    prompt_keyword: 'High-fidelity 3D Animation, Disney/Pixar art style, fluffy fur simulation, expressive characters, volumetric lighting, vibrant colors, octane render, 8k resolution, subsurface scattering, cinematic composition',
+    description: 'Animasi 3D kualitas bioskop dengan bulu halus (Referensi: Kucing gemuk bermain kembang api).' 
+  },
 ];

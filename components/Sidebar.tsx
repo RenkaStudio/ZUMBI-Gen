@@ -10,9 +10,9 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView }) => {
   const menuItems = [
     { view: AppView.STUDIO, label: 'Studio Kreatif', icon: Icons.LightBulb },
-    { view: AppView.SCENE_DIRECTOR, label: 'Scene Director', icon: Icons.Film },
-    { view: AppView.SCRIPT, label: 'Script & VO', icon: Icons.Microphone },
     { view: AppView.METADATA, label: 'Metadata', icon: Icons.ChartBar },
+    { view: AppView.SCRIPT, label: 'Script & VO', icon: Icons.Microphone },
+    { view: AppView.SCENE_DIRECTOR, label: 'Scene Director', icon: Icons.Film },
   ];
 
   return (

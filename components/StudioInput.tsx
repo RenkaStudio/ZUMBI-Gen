@@ -98,7 +98,7 @@ const StudioInput: React.FC<StudioInputProps> = ({ onGenerate, isGenerating }) =
                             <span>Shorts / Reels</span>
                             <span className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400">9:16</span>
                         </div>
-                        <span className="text-xs font-normal opacity-70">~60 Seconds • Fast Paced</span>
+                        <span className="text-xs font-normal opacity-70">~60 Sec • 10 Scenes</span>
                     </button>
                     
                     <button 
@@ -113,7 +113,7 @@ const StudioInput: React.FC<StudioInputProps> = ({ onGenerate, isGenerating }) =
                             <span>Full Video</span>
                             <span className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400">16:9</span>
                         </div>
-                        <span className="text-xs font-normal opacity-70">~3 Minutes • Cinematic</span>
+                        <span className="text-xs font-normal opacity-70">~3 Min • 25 Scenes</span>
                     </button>
                 </div>
              </div>
@@ -125,9 +125,9 @@ const StudioInput: React.FC<StudioInputProps> = ({ onGenerate, isGenerating }) =
                         <Icons.Sparkles className="w-4 h-4 text-blue-400"/>
                     </div>
                     <div>
-                        <h4 className="text-xs font-bold text-zinc-300 uppercase mb-1">Auto-Director AI</h4>
+                        <h4 className="text-xs font-bold text-zinc-300 uppercase mb-1">Step 1: Script Draft</h4>
                         <p className="text-xs text-zinc-500 leading-relaxed">
-                            Tone, Narrative Style, and Pacing are automatically optimized based on your topic and chosen duration.
+                            AI creates a viral script. You can edit it before generating the visual scenes.
                         </p>
                     </div>
                 </div>
@@ -152,12 +152,12 @@ const StudioInput: React.FC<StudioInputProps> = ({ onGenerate, isGenerating }) =
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                    </svg>
-                   DIRECTING THE SCENES...
+                   WRITING SCRIPT...
                 </>
             ) : (
                 <>
                    <Icons.Play className="w-6 h-6 mr-3"/>
-                   GENERATE STORYBOARD
+                   GENERATE SCRIPT & DRAFT
                 </>
             )}
         </button>
