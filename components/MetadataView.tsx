@@ -62,15 +62,6 @@ const MetadataView: React.FC<MetadataViewProps> = ({ data }) => {
             label="Description & Hashtags" 
             text={descAndTags} 
         />
-        
-        <div className="bg-orange-500/5 border border-orange-500/10 rounded-lg p-4 flex gap-3 items-start">
-             <div className="mt-1 text-orange-500">
-                <Icons.Sparkles className="w-4 h-4" />
-             </div>
-             <p className="text-sm text-zinc-400">
-                 Tips: Gunakan musik trending saat upload dan paste deskripsi di atas untuk menjangkau audiens lebih luas.
-             </p>
-        </div>
       </div>
     </div>
   );

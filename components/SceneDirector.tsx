@@ -7,106 +7,55 @@ interface SceneDirectorProps {
   data: StoryboardResponse | null;
 }
 
-const SceneCard: React.FC<{ scene: StoryboardScene }> = ({ scene }) => {
-  const [copiedPrompt, setCopiedPrompt] = useState(false);
+const SceneJsonBlock: React.FC<{ scene: StoryboardScene }> = ({ scene }) => {
+  const [copied, setCopied] = useState(false);
 
-  const copyDetailedPrompt = () => {
-    // Kita hanya meng-copy prompt visual yang "Mahal" untuk Veo/Sora
-    navigator.clipboard.writeText(scene.visual_prompt_detailed);
-    setCopiedPrompt(true);
-    setTimeout(() => setCopiedPrompt(false), 2000);
+  // Construct a cleaner JSON specifically for Generation Tools
+  const displayJson = {
+    scene_number: scene.scene_id,
+    duration: `${scene.duration_sec}s`,
+    visual_prompt: scene.visual_prompt_detailed,
+    negative_prompt: "blurry, distorted, low quality, watermark, text",
+    camera_movement: scene.camera.movement,
+    sfx_notes: scene.vfx,
+    narration: scene.narration_script
+  };
+
+  const jsonString = JSON.stringify(displayJson, null, 2);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(jsonString);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="group relative bg-zinc-900 border border-zinc-800 hover:border-orange-500/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-orange-900/10">
-      
-      {/* 1. Header Information (Time & Shot) */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity"/>
-      
-      <div className="p-5 flex flex-col md:flex-row gap-6">
-        
-        {/* LEFT: VISUAL CONTROL CENTER */}
-        <div className="flex-1 space-y-4">
-           <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-3">
-                 <span className="w-8 h-8 rounded-lg bg-zinc-800 text-zinc-400 font-mono text-sm flex items-center justify-center border border-zinc-700">
-                    #{scene.scene_id}
-                 </span>
-                 <span className="px-2 py-1 rounded-md bg-zinc-800 text-zinc-300 text-xs font-bold uppercase tracking-wider border border-zinc-700">
-                    {scene.duration_sec}s
-                 </span>
-                 <span className="px-2 py-1 rounded-md bg-blue-900/20 text-blue-400 text-xs font-bold uppercase tracking-wider border border-blue-900/30">
-                    {scene.camera.shot_type}
-                 </span>
-              </div>
-           </div>
-
-           {/* The Visual Prompt Box (The most important part) */}
-           <div className="bg-zinc-950 rounded-xl border border-zinc-800 p-4 relative group/prompt">
-              <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">AI VIDEO GENERATOR PROMPT</h4>
-              <p className="text-zinc-300 text-sm leading-relaxed font-medium">
-                 {scene.visual_prompt_detailed}
-              </p>
-              
-              <button 
-                onClick={copyDetailedPrompt}
-                className={`absolute top-2 right-2 p-2 rounded-lg text-xs font-bold flex items-center gap-2 transition-all ${
-                    copiedPrompt ? 'bg-green-500 text-white' : 'bg-zinc-800 text-zinc-400 opacity-0 group-hover/prompt:opacity-100 hover:text-white'
-                }`}
-              >
-                {copiedPrompt ? <Icons.Check className="w-3 h-3"/> : <Icons.Copy className="w-3 h-3"/>}
-                {copiedPrompt ? 'COPIED' : 'COPY'}
-              </button>
-           </div>
-
-           {/* Technical Specs Grid */}
-           <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-zinc-800/30 p-2 rounded border border-zinc-800/50">
-                 <span className="text-zinc-500 block mb-1">Camera Move</span>
-                 <span className="text-orange-400 font-medium">{scene.camera.movement}</span>
-              </div>
-              <div className="bg-zinc-800/30 p-2 rounded border border-zinc-800/50">
-                 <span className="text-zinc-500 block mb-1">Lighting</span>
-                 <span className="text-yellow-200/80 font-medium">{scene.background_lock.lighting}</span>
-              </div>
-           </div>
+    <div className="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden mb-6 shadow-lg">
+      <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800">
+        <div className="flex items-center gap-3">
+          <span className="w-6 h-6 rounded bg-orange-500/10 text-orange-500 flex items-center justify-center font-mono text-xs border border-orange-500/20">
+            {scene.scene_id}
+          </span>
+          <span className="text-sm font-bold text-zinc-300">JSON Prompt Object</span>
         </div>
-
-        {/* RIGHT: NARRATIVE & CHARACTER */}
-        <div className="md:w-1/3 flex flex-col justify-between border-l border-zinc-800 md:pl-6 space-y-4">
-           
-           {/* Narration */}
-           <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 p-4 rounded-xl border border-zinc-800">
-               <div className="flex items-center gap-2 mb-2">
-                   <Icons.Script className="w-3 h-3 text-zinc-500"/>
-                   <span className="text-[10px] font-bold text-zinc-500 uppercase">VOICE OVER (ID)</span>
-               </div>
-               <p className="text-zinc-200 text-sm italic leading-relaxed">
-                  "{scene.narration_script}"
-               </p>
-           </div>
-
-           {/* Character Lock Indicator */}
-           {scene.character_lock && (
-               <div className="flex items-center gap-3 p-3 bg-zinc-950/50 rounded-lg border border-zinc-800/50">
-                   <div className="w-8 h-8 rounded-full bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xs font-bold">
-                       {scene.character_lock.id.substring(0,2)}
-                   </div>
-                   <div className="flex-1 min-w-0">
-                       <div className="text-[10px] text-zinc-500 uppercase font-bold">Character Lock</div>
-                       <div className="text-xs text-zinc-300 truncate">{scene.character_lock.name}</div>
-                   </div>
-               </div>
-           )}
-
-           {/* Text Overlay */}
-           {scene.text_overlay && (
-                <div className="px-3 py-2 bg-pink-500/10 border border-pink-500/20 rounded text-center">
-                    <span className="text-[10px] text-pink-500 font-bold uppercase block mb-0.5">ON SCREEN TEXT</span>
-                    <span className="text-xs text-pink-200 font-bold">"{scene.text_overlay}"</span>
-                </div>
-           )}
-        </div>
+        <button
+          onClick={handleCopy}
+          className={`text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-2 transition-all ${
+            copied 
+              ? 'bg-green-500/20 text-green-400' 
+              : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
+          }`}
+        >
+          {copied ? <Icons.Check className="w-3 h-3" /> : <Icons.Copy className="w-3 h-3" />}
+          {copied ? 'COPIED' : 'COPY JSON'}
+        </button>
+      </div>
+      <div className="p-4 overflow-x-auto relative group">
+        <pre className="text-xs md:text-sm font-mono text-zinc-300 leading-relaxed whitespace-pre-wrap break-all">
+          <span className="text-purple-400">{`{`}</span>
+          {jsonString.slice(1, -1)}
+          <span className="text-purple-400">{`}`}</span>
+        </pre>
       </div>
     </div>
   );
@@ -123,24 +72,17 @@ const SceneDirector: React.FC<SceneDirectorProps> = ({ data }) => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 pb-20">
-       <div className="flex items-end justify-between border-b border-zinc-800 pb-6">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-black text-zinc-100 uppercase tracking-tight">Scene Director</h2>
-            <p className="text-zinc-400 flex items-center gap-2">
-                <span className="text-orange-500 font-bold">{data.scenes.length} Scenes</span> 
-                • 
-                <span className="text-zinc-500">Total Duration: {data.scenes.reduce((a, b) => a + b.duration_sec, 0)}s</span>
-            </p>
-          </div>
-          <div className="bg-zinc-900 px-4 py-2 rounded-lg border border-zinc-800 text-xs text-zinc-400">
-             Music: <span className="text-zinc-200 font-medium">{data.metadata.music_suggestion}</span>
-          </div>
+    <div className="max-w-4xl mx-auto space-y-8 pb-20">
+       <div className="border-b border-zinc-800 pb-6">
+          <h2 className="text-3xl font-black text-zinc-100 uppercase tracking-tight mb-2">Scene JSON Prompts</h2>
+          <p className="text-zinc-400 text-sm">
+             Copy the JSON objects below directly into your AI Video Generator or Automation Workflow (Make/n8n).
+          </p>
        </div>
 
-       <div className="space-y-6">
+       <div>
          {data.scenes.map((scene) => (
-           <SceneCard key={scene.scene_id} scene={scene} />
+           <SceneJsonBlock key={scene.scene_id} scene={scene} />
          ))}
        </div>
     </div>

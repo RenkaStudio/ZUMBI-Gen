@@ -51,28 +51,29 @@ export const generateStoryboard = async (topic: string, options: GenerateOptions
      - 'visual_prompt_detailed': This is for the Video AI generator. It MUST include the *Visual Style Keyword*, *Lighting*, *Camera Angle*, *Action*, and *Texture Details*.
      - Example: "Close-up macro shot of a cute red crab with big eyes, holding a tiny suitcase, standing on wet asphalt. Claymation style, fingerprints visible on the shell, tilt-shift effect, golden hour lighting."
 
-  4. **CAMERA MOVEMENT**:
-     - Never just say "Static". Use: "Slow dolly in", "Truck left", "Orbit around", "Rack focus from X to Y". Dynamic cameras make viral videos.
-
-  5. **NARRATIVE (INDONESIAN)**:
+  4. **NARRATIVE (INDONESIAN - PURE SPEECH)**:
      - Script must be colloquial, natural, and match the Determined Tone.
-     - Add [Sound Effect] cues in the script if necessary (e.g., *Bunyi ledakan*, *Suara ombak*).
+     - **CRITICAL**: DO NOT include sound effects or actions in brackets like [Suara Ombak] or (Ketawa). Keep it strictly spoken words only. SFX belongs in the visual prompt/JSON.
+
+  5. **METADATA & GUIDES**:
+     - Title: Must be HIGH-CTR, CLICKBAIT, and SEO OPTIMIZED (e.g., "TERUNGKAP! Rahasia Kelam di Balik...").
+     - Voice Over Guide: Provide specific, actionable direction. Not just "Happy", but "Start with a whisper to build mystery, then shift to high-energy excitement at scene 3. Use a warm, storytelling timbre."
 
   === OUTPUT FORMAT (JSON ONLY) ===
   {
     "metadata": {
-      "title": "Clickbait/Viral Title (Indonesian)",
+      "title": "SEO Optimized & Clickbait Title (Indonesian)",
       "description": "Engaging description (Indonesian)",
       "hashtags": ["#tag1", "#tag2"],
       "music_suggestion": "Mood and Genre of background music",
-      "tone_used": "The tone you selected (e.g., Fun Educational)"
+      "tone_used": "The tone you selected"
     },
-    "voice_over_guide": "English instruction for the VO artist/AI",
+    "voice_over_guide": "Comprehensive English instruction for the VO artist/AI (Tone, Pacing, Emphasis)",
     "scenes": [
       {
         "scene_id": 1,
         "duration_sec": 4,
-        "narration_script": "Teks dubbing Indonesia...",
+        "narration_script": "Teks dubbing Indonesia only (No SFX text)",
         "text_overlay": "Teks Singkat di Layar (Max 5 words) or null",
         "visual_prompt_summary": "Short description for UI display",
         "visual_prompt_detailed": "FULL DETAILED PROMPT FOR AI VIDEO GENERATOR (Includes style keywords + action + camera)",
