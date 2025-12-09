@@ -59,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView }) => {
               : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200'
           }`}
         >
-          <Icons.Cog className={`w-5 h-5 mr-3 ${currentView === AppView.SETTINGS ? 'text-orange-500' : 'text-zinc-500'}`} />
+          <Icons.Settings className={`w-5 h-5 mr-3 ${currentView === AppView.SETTINGS ? 'text-orange-500' : 'text-zinc-500'}`} />
           Settings
         </button>
         

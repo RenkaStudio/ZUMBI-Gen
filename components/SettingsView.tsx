@@ -31,7 +31,7 @@ const SettingsView: React.FC = () => {
       <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-6">
         <div className="flex items-start gap-4">
             <div className="p-3 bg-orange-500/10 rounded-lg">
-                <Icons.Cog className="w-6 h-6 text-orange-500" />
+                <Icons.Settings className="w-6 h-6 text-orange-500" />
             </div>
             <div className="flex-1 space-y-1">
                 <h3 className="text-lg font-medium text-zinc-200">Gemini API Key</h3>

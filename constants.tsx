@@ -1,8 +1,8 @@
-// constants.tsx
+// components/constants.tsx
 import React from 'react';
 import { VisualStyleConfig } from './types';
 
-// Icons Component (Menggunakan SVG murni agar tidak perlu install library lain)
+// Icons Component
 export const Icons = {
   Magic: ({ className }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 3v4"/><path d="M7 3v4"/><path d="M3 7h4"/><path d="M3 5h4"/></svg>
@@ -17,9 +17,6 @@ export const Icons = {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l5 5a2 2 0 0 0 2.828 0l7.172-7.172a2 2 0 0 0 0-2.828l-5-5z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
   ),
   Settings: ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-  ),
-  Cog: ({ className }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
   ),
   Check: ({ className }: { className?: string }) => (
@@ -47,21 +44,21 @@ export const Icons = {
 
 export const VISUAL_STYLES: VisualStyleConfig[] = [
   { 
-    id: 'clay_master', 
-    label: 'High-end Clay', 
-    prompt_keyword: 'Plasticine claymation, miniature diorama, visible fingerprints on clay, soft tilt-shift photography, tactile textures, cinematic studio lighting, bulky shapes, vibrant matte colors, stop-motion aesthetic, shallow depth of field',
-    description: 'Animasi plastisin detail dengan tekstur sidik jari (Referensi: Petualang kecil dengan tas).' 
+    id: 'clay_soft', 
+    label: 'Soft Polymer Clay', 
+    prompt_keyword: 'Flawless 3D polymer clay texture, smooth fondant finish, cute chibi aesthetics, clean geometry, soft subsurface scattering (SSS), volumetric lighting, magical atmosphere, vibrant pastel palette, high-fidelity octane render style, tilt-shift photography',
+    description: 'Animasi 3D clay dengan tekstur halus, warna pastel, dan pencahayaan lembut.' 
   },
   { 
-    id: 'knit_craft', 
-    label: 'Felt & Wool', 
-    prompt_keyword: 'Felt stop-motion animation, fuzzy wool textures, stray fibers, knitted fabric environment, macro lens photography, soft cozy forest lighting, handmade doll aesthetic, needle felting details, rim lighting on fibers',
-    description: 'Dunia rajutan benang wol yang lembut dan hangat (Referensi: Anak laki-laki di hutan).' 
+    id: 'felt_stopmotion', 
+    label: 'Felt & Wool Stop-Motion', 
+    prompt_keyword: 'Needle felted stop-motion animation, fuzzy wool textures, backlit stray fibers (rim light), cozy warm atmosphere, macro lens photography, shallow depth of field, handmade fabric aesthetic but cinematic lighting, soft shadows',
+    description: 'Animasi boneka flanel/rajut dengan detail serabut dan pencahayaan hangat.' 
   },
   { 
-    id: 'cinematic_pixar', 
-    label: '3D Pixar Style', 
-    prompt_keyword: 'High-fidelity 3D Animation, Disney/Pixar art style, fluffy fur simulation, expressive characters, volumetric lighting, vibrant colors, octane render, 8k resolution, subsurface scattering, cinematic composition',
-    description: 'Animasi 3D kualitas bioskop dengan bulu halus (Referensi: Kucing gemuk bermain kembang api).' 
+    id: 'cinematic_3d', 
+    label: 'Cinematic 3D Render', 
+    prompt_keyword: 'High-fidelity 3D Animation, feature film animation style, fluffy fur simulation, expressive characters, volumetric lighting, vibrant colors, octane render, 8k resolution, subsurface scattering, cinematic composition',
+    description: 'Animasi 3D kualitas tinggi dengan simulasi bulu dan pencahayaan studio.' 
   },
 ];

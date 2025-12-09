@@ -9,7 +9,7 @@ export interface VisualStyleConfig {
   description: string;
 }
 
-// --- NEW STRICT JSON STRUCTURE INTERFACES ---
+// --- STRICT JSON STRUCTURE INTERFACES ---
 
 export interface ProjectSettings {
   project_name: string;
@@ -57,7 +57,7 @@ export interface AudioSoundDesign {
 export interface StrictScene {
   scene_id: number;
   duration_sec: number;
-  narration_script: string; // The segment of the script for this scene
+  narration_script: string; 
   visual_style_override: string;
   character_design: CharacterDesign;
   character_performance: CharacterPerformance;
@@ -65,6 +65,12 @@ export interface StrictScene {
   visual_effects_vfx: VisualEffects;
   camera_work: CameraWork;
   audio_sound_design: AudioSoundDesign;
+  
+  // REQUIRED: Transition logic for smoother video flow
+  transition_to_next_scene: {
+    type: 'Hard Cut' | 'Dissolve' | 'Wipe' | 'Match Cut' | 'Zoom Transition';
+    description: string;
+  };
 }
 
 export interface MarketingMetadata {
@@ -75,11 +81,9 @@ export interface MarketingMetadata {
 
 export interface StoryboardResponse {
   project_settings: ProjectSettings;
-  // script_content is now the primary source of truth before scenes are generated
   script_content: string; 
   marketing_metadata: MarketingMetadata;
   voice_over_guide: string;
-  // Scenes are optional because they are generated in step 2
   scenes?: StrictScene[]; 
 }
 
